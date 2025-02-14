@@ -1,10 +1,15 @@
 "use client";
-import { Button, Flex, Heading, Image } from "@chakra-ui/react";
+import { Button, Flex, Heading, Image, Text, Box, keyframes } from "@chakra-ui/react";
 import { UserAuth } from "./context/AuthContext";
 import GoogleIcon from "@mui/icons-material/Google";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Loader from "./components/Loader";
+
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
 
 export default function App() {
   const { googleSignIn, user } = UserAuth();
@@ -25,41 +30,105 @@ export default function App() {
   return user === "loading" || user !== null ? (
     <Loader />
   ) : (
-    <Flex h="100vh" w="100%">
+    <Flex h="100vh" w="100%" bg="gray.900" overflow="hidden">
       <Image
-        w="40%"
+        w={["0%", "0%", "40%"]}
         h="100%"
         src="/landing-image.svg"
         objectFit="cover"
         display={["none", "none", "initial"]}
+        transition="transform 0.3s ease-in-out"
+        _hover={{ transform: 'scale(1.05)' }}
       />
       <Flex
         w={["100%", "100%", "60%"]}
         h="100%"
         bgImage="/background.png"
         bgSize="cover"
+        bgPosition="center"
         alignItems="center"
         justifyContent="center"
+        position="relative"
       >
+        {/* Background Overlay */}
+        <Box
+          position="absolute"
+          top="0"
+          left="0"
+          right="0"
+          bottom="0"
+          bg="blackAlpha.600"
+          backdropFilter="blur(10px)"
+        />
+        
         <Flex
-          bg="rgba(0,0,0,0.4)"
-          borderRadius="1rem"
-          p="2rem"
+          animation={`${fadeIn} 0.6s ease-out`}
+          bg="rgba(255, 255, 255, 0.1)"
+          borderRadius="xl"
+          p={["6", "8", "10"]}
           flexDir="column"
           alignItems="center"
+          position="relative"
+          backdropFilter="blur(16px)"
+          border="1px solid"
+          borderColor="whiteAlpha.200"
+          boxShadow="2xl"
+          maxW="400px"
+          w="90%"
+          transition="transform 0.3s ease"
+          _hover={{ transform: 'translateY(-5px)' }}
         >
-          <Image w="8rem" src="/ADG.jpg" />
-          <Heading color="brand.gray">ADG-VIT</Heading>
+          <Image 
+            w="24"
+            h="24"
+            src="/ADG.jpg"
+            borderRadius="xl"
+            mb="6"
+            transition="transform 0.3s ease"
+            _hover={{ transform: 'rotate(5deg)' }}
+          />
+          <Heading 
+            color="white" 
+            fontSize={["2xl", "3xl"]}
+            mb="2"
+          >
+            ADG-VIT
+          </Heading>
+          <Text 
+            color="whiteAlpha.800" 
+            mb="8" 
+            textAlign="center"
+            fontSize="lg"
+          >
+            Welcome to the Developer Gateway
+          </Text>
           <Button
-            mt="2rem"
             onClick={handleSignIn}
             leftIcon={<GoogleIcon />}
-            bg="brand.btnBg"
-            _hover={{ bg: "brand.btnBgHover" }}
-            color="brand.gray"
+            size="lg"
+            w="full"
+            bg="linear-gradient(to right, #3182ce, #805ad5)"
+            color="white"
+            _hover={{
+              bg: "linear-gradient(to right, #2c5282, #6b46c1)",
+              transform: "translateY(-2px)",
+              boxShadow: "xl"
+            }}
+            transition="all 0.3s ease"
+            fontSize="md"
+            fontWeight="semibold"
+            px="8"
           >
             Sign in with Google
           </Button>
+          <Text 
+            mt="6" 
+            color="whiteAlpha.600" 
+            fontSize="sm" 
+            textAlign="center"
+          >
+            By signing in, you agree to our Terms of Service
+          </Text>
         </Flex>
       </Flex>
     </Flex>

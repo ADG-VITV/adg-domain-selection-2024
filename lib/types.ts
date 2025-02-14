@@ -13,6 +13,9 @@ export enum Domain {
   ml = "ml",
   blockchain = "blockchain",
   design = "design",
+  Editorial='editorial',
+  Finance='finance',
+  Events='events'
 }
 
 export enum ManagementDomain {

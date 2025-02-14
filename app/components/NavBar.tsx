@@ -25,6 +25,7 @@ export default function NavBar() {
   const { user, logOut } = UserAuth();
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  
 
   return user === null || user === "loading" ? (
     <></>

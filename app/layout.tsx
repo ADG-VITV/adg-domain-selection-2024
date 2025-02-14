@@ -4,8 +4,8 @@ import { Providers } from "./providers";
 import { fonts } from "./fonts";
 
 export const metadata: Metadata = {
-  title: "ADG Domain Selections '24",
-  description: "Domain Selections Portal for ADG's 2024 recruits",
+  title: "ADG Domain Selections '25",
+  description: "Domain Selections Portal for ADG's 2025 recruits",
 };
 
 export default function RootLayout({

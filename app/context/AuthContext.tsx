@@ -37,7 +37,7 @@ export const AuthContextProvider = ({ children }: { children: any }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-  
+   
     return () => unsubscribe();
   }, [user]);
 

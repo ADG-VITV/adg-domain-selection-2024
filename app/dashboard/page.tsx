@@ -17,12 +17,11 @@ import NavBar from "../components/NavBar";
 import { Domain } from "@/lib/types";
 import { getSubmittedTechnicalDomains } from "@/lib/functions";
 import { User } from "firebase/auth";
-import ManageAccountsIcon from "@mui/icons-material/ManageAccounts";
 import useCheckTest from "../hooks/useCheckTest";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaHtml5, FaApple, FaAndroid, FaPython } from "react-icons/fa";
 import { SiSolidity, SiFigma } from "react-icons/si";
-
+import { MdEdit, MdAttachMoney, MdEvent } from "react-icons/md";
 import { DomainCard, DomainInfo } from "../components/DomainCard";
 
 
@@ -113,6 +112,28 @@ export default function Dashboard() {
       tech: "UI/UX, Figma",
       color: "linear(to-r, #6a11cb, #2575fc)",
     },
+    
+  ];
+
+  const marketingDomain: DomainInfo[] = [  // Added explicit typing
+    {
+      icon: MdEdit,
+      label: "Editorial" as Domain,
+      tech: "Content Writing, Editing",
+      color: "linear(to-r, #ff6b6b, #ff8e8e)",
+    },
+    {
+      icon: MdAttachMoney,
+      label: "Finance" as Domain,
+      tech: "Financial, Planning",
+      color: "linear(to-r, #4ecdc4, #45b7af)",
+    },
+    {
+      icon: MdEvent,
+      label: "Events" as Domain,
+      tech: "Event , Management",
+      color: "linear(to-r, #a8e6cf, #90d4be)",
+    }
   ];
 
   return (
@@ -165,23 +186,10 @@ export default function Dashboard() {
           </Flex>
         </MotionBox>
 
-        <MotionBox
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          <Heading
-            color={headingColor}
-            fontSize={{ base: "4xl", md: "5xl" }}
-            fontWeight="bold"
-            mb="8"
-            bgGradient="linear(to-r, #fff, #a8b2d1)"
-            bgClip="text"
-          >
-            Management Domain
-          </Heading>
 
-          <Link href="/management" textDecoration="none" display="inline-block">
+  
+
+          {/* <Link href="/management" textDecoration="none" display="inline-block">
             <Button
               as={motion.button}
               isDisabled={testStatus?.isTestCompleted ?? false}
@@ -209,7 +217,42 @@ export default function Dashboard() {
             >
               Start Management Task
             </Button>
-          </Link>
+          </Link> */}
+
+<MotionBox
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          mb="16"
+        >
+                  <Heading
+            color={headingColor}
+            fontSize={{ base: "4xl", md: "5xl" }}
+            fontWeight="bold"
+            mb="8"
+            bgGradient="linear(to-r, #fff, #a8b2d1)"
+            bgClip="text"
+          >
+            Management Domain
+          </Heading>
+          <Flex
+            gap="6"
+            flexWrap="wrap"
+            justifyContent={{ base: "center", md: "flex-start" }}
+          >
+            <AnimatePresence>
+              {marketingDomain.map((domain, index) => (
+                <DomainCard
+                  key={domain.label}
+                  {...domain}
+                  index={index}
+                  isGrayed={domainsToBeGrayed.includes(domain.label)}
+                  setHovered={setHoveredDomain}
+                  isHovered={hoveredDomain === domain.label}
+                />
+              ))}
+            </AnimatePresence>
+          </Flex>
         </MotionBox>
       </Box>
     </Box>

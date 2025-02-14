@@ -32,7 +32,6 @@ export const DomainCard = ({
   setHovered,
   isHovered,
   color,
-  
 }: DomainCardProps) => {
   const gradientColors = color.split(",")[1].split(")")[0].trim().split(" ");
   const startColor = gradientColors[0];
@@ -48,22 +47,37 @@ export const DomainCard = ({
       onHoverStart={() => setHovered(isGrayed ? null : label)}
       onHoverEnd={() => setHovered(null)}
     >
-      <Link href={`/dashboard/${toLowerCaseLabel(label)}`} passHref legacyBehavior >
-        <ChakraLink _hover={{ textDecoration: "none" }} pointerEvents={isGrayed ? "none" : "auto"}>
+      <Link
+        href={`/dashboard/${toLowerCaseLabel(label)}`}
+        passHref
+        legacyBehavior
+      >
+        <ChakraLink
+          _hover={{ textDecoration: "none" }}
+          pointerEvents={isGrayed ? "none" : "auto"}
+        >
           <Flex
             direction="column"
             align="center"
             justify="center"
             w="40"
             h="40"
-            bg={isHovered ? "rgba(255, 255, 255, 0.15)" : "rgba(255, 255, 255, 0.1)"}
+            bg={
+              isHovered
+                ? "rgba(255, 255, 255, 0.15)"
+                : "rgba(255, 255, 255, 0.1)"
+            }
             backdropFilter="blur(10px)"
             borderRadius="2xl"
             cursor={isGrayed ? "not-allowed" : "pointer"}
             position="relative"
             overflow="hidden"
             border="1px solid"
-            borderColor={isHovered ? "rgba(255, 255, 255, 0.2)" : "rgba(255, 255, 255, 0.1)"}
+            borderColor={
+              isHovered
+                ? "rgba(255, 255, 255, 0.2)"
+                : "rgba(255, 255, 255, 0.1)"
+            }
             opacity={isGrayed ? 0.3 : 1}
             filter={isGrayed ? "grayscale(100%) brightness(0.7)" : "none"}
             transition="all 0.3s"
@@ -74,7 +88,9 @@ export const DomainCard = ({
                 fontSize="5xl"
                 color={isGrayed ? "gray.500" : startColor}
                 sx={{
-                  filter: isGrayed ? "grayscale(100%) brightness(0.8)" : `drop-shadow(0 0 8px ${startColor}33)`,
+                  filter: isGrayed
+                    ? "grayscale(100%) brightness(0.8)"
+                    : `drop-shadow(0 0 8px ${startColor}33)`,
                   transition: "all 0.3s",
                 }}
                 transform={isHovered && !isGrayed ? "scale(1.1)" : "scale(1)"}
@@ -96,15 +112,22 @@ export const DomainCard = ({
               )}
             </Box>
 
-            <Text color={isGrayed ? "gray.400" : "white"} fontSize="xl" fontWeight="600" mb="2">
-              {label}
+            <Text
+              color={isGrayed ? "gray.400" : "white"}
+              fontSize="xl"
+              fontWeight="600"
+              mb="2"
+            >
+              {isGrayed ? "Submitted" : label}
             </Text>
 
             <Text
               color={isGrayed ? "gray.500" : "whiteAlpha.700"}
               fontSize="sm"
               opacity={isHovered && !isGrayed ? 1 : 0}
-              transform={isHovered && !isGrayed ? "translateY(0)" : "translateY(10px)"}
+              transform={
+                isHovered && !isGrayed ? "translateY(0)" : "translateY(10px)"
+              }
               transition="all 0.3s"
             >
               {tech}

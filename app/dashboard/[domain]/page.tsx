@@ -28,6 +28,7 @@ const getSubmissions = async (
   setDomainsToBeGrayed: Dispatch<SetStateAction<"loading" | Domain[]>>
 ) => {
   const technicalDomains = await getSubmittedTechnicalDomains(user);
+  console.log("Technical Domains Retrieved:", technicalDomains);
   setDomainsToBeGrayed(technicalDomains);
 };
 
@@ -62,12 +63,21 @@ export default function DomainPage({ params }: { params: { domain: string } }) {
 
   useEffect(() => {
     if (user === null) router.push("/");
-    else if (user !== "loading") getSubmissions(user, setDomainsToBeGrayed);
+    else if (user !== "loading") {
+      getSubmissions(user, setDomainsToBeGrayed);
+    }
   }, [user]);
-
+  
   useEffect(() => {
-    if (domainsToBeGrayed.includes(domain)) router.push("/");
-  }, [domainsToBeGrayed]);
+    if (domainsToBeGrayed !== "loading" && domainsToBeGrayed.includes(domain)) {
+      router.push("/");
+    }
+  }, [domainsToBeGrayed, domain, router]);
+  
+  
+  console.log("Fetched Domains:", domainsToBeGrayed);
+console.log("Current Domain:", domain);
+
 
   const handleInputChange = (value: string) => {
     if (linkError.status) setLinkError({ status: false, message: "" });

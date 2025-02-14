@@ -36,6 +36,8 @@ export default function DomainPage({ params }: { params: { domain: string } }) {
   const { user } = UserAuth();
   const router = useRouter();
   const domain = params.domain as Domain;
+  console.log( domain);
+
   const assignmentPlatform = domain === Domain.design ? "Figma" : "GitHub";
   const [assignmentLink, setAssignmentLink] = useState("");
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -45,21 +47,21 @@ export default function DomainPage({ params }: { params: { domain: string } }) {
   const [linkError, setLinkError] = useState({ status: false, message: "" });
 
   // check for ongoing test
-  const { testStatus } = useCheckTest();
-  useEffect(() => {
-    if (
-      testStatus === "loading" ||
-      testStatus === null ||
-      testStatus.isTestCompleted
-    )
-      return;
-    if (testStatus.isGivingTest) router.push("/management/test");
-    else router.push("/dashboard");
-  }, [testStatus]);
+  // const { testStatus } = useCheckTest();
+  // useEffect(() => {
+  //   if (
+  //     testStatus === "loading" ||
+  //     testStatus === null ||
+  //     testStatus.isTestCompleted
+  //   )
+  //     return;
+  //   if (testStatus.isGivingTest) router.push("/management/test");
+  //   else router.push("/dashboard");
+  // }, [testStatus]);
 
-  useEffect(() => {
-    if (!(domain in Domain)) router.push("/dashboard");
-  }, []);
+  // useEffect(() => {
+  //   if (!(domain in Domain)) router.push("/dashboard");
+  // }, []);
 
   useEffect(() => {
     if (user === null) router.push("/");
@@ -104,15 +106,21 @@ console.log("Current Domain:", domain);
     }
   };
 
-  return user === "loading" ||
-    user === null ||
-    !(domain in Domain) ||
-    domainsToBeGrayed === "loading" ||
-    domainsToBeGrayed.includes(domain) ||
-    testStatus === "loading" ||
-    (testStatus !== null && testStatus.isGivingTest) ? (
-    <Loader />
-  ) : (
+  // return user === "loading" ||
+  //   user === null ||
+  //   !(domain in Domain) ||
+  //   domainsToBeGrayed === "loading" ||
+  //   domainsToBeGrayed.includes(domain) ||
+  //   testStatus === "loading" ||
+  //   (testStatus !== null && testStatus.isGivingTest) ? (
+  //   <Loader />
+  // ) : (
+
+  if( user === null){
+    return <p>Errorr</p>
+  }
+  return<>
+
     <Flex
       flexDir="column"
       bg="black"
@@ -179,5 +187,6 @@ console.log("Current Domain:", domain);
         </Flex>
       </Flex>
     </Flex>
-  );
+    </>
+
 }

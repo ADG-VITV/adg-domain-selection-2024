@@ -43,20 +43,20 @@ export default function Dashboard() {
   const [domainsToBeGrayed, setDomainsToBeGrayed] = useState<Domain[] | "loading">("loading");
   const { testStatus } = useCheckTest();
   const [hoveredDomain, setHoveredDomain] = useState<Domain | null>(null);  
-  
-  useEffect(() => {
-    if (testStatus === "loading" || testStatus === null) return;
-    if (testStatus.isGivingTest) router.push("/management/test");
-    else router.push("/dashboard");
-  }, [testStatus]);
+  // console.log( hoveredDomain);
+  // useEffect(() => {
+  //   if (testStatus === "loading" || testStatus === null) return;
+  //   if (testStatus.isGivingTest) router.push("/management/test");
+  //   else router.push("/dashboard");
+  // }, [testStatus]);
 
   const headingColor = useColorModeValue("white", "white");
 
-  useEffect(() => {
-    if (testStatus === "loading" || testStatus === null) return;
-    if (testStatus.isGivingTest) router.push("/management/test");
-    else router.push("/dashboard");
-  }, [testStatus]);
+  // useEffect(() => {
+  //   if (testStatus === "loading" || testStatus === null) return;
+  //   if (testStatus.isGivingTest) router.push("/management/test");
+  //   else router.push("/dashboard");
+  // }, [testStatus]);
 
   useEffect(() => {
     if (user === null) {

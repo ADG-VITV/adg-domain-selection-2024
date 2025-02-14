@@ -17,7 +17,7 @@ const AuthContext = createContext<IAuthContext>({
 
 export const AuthContextProvider = ({ children }: { children: any }) => {
   const [user, setUser] = useState<IAuthContext["user"]>("loading");
-
+  
   // login function
   const googleSignIn = async () => {
     const provider = new GoogleAuthProvider();

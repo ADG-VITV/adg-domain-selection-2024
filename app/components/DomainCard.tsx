@@ -36,7 +36,7 @@ export const DomainCard = ({
   const gradientColors = color.split(",")[1].split(")")[0].trim().split(" ");
   const startColor = gradientColors[0];
   const endColor = gradientColors[1];
-
+  // console.log( label+ " "+ isGrayed)
   return (
     <MotionBox
       initial={{ opacity: 0, y: 20 }}
@@ -117,8 +117,9 @@ export const DomainCard = ({
               fontSize="xl"
               fontWeight="600"
               mb="2"
+              textAlign="center"
             >
-              {isGrayed ? "Submitted" : label}
+              {isGrayed ? label + " Submitted" : label}
             </Text>
 
             <Text

@@ -77,8 +77,8 @@ export default function DomainPage({ params }: { params: { domain: string } }) {
   }, [domainsToBeGrayed, domain, router]);
   
   
-  console.log("Fetched Domains:", domainsToBeGrayed);
-console.log("Current Domain:", domain);
+//   console.log("Fetched Domains:", domainsToBeGrayed);
+// console.log("Current Domain:", domain);
 
 
   const handleInputChange = (value: string) => {

@@ -24,7 +24,8 @@ import { SiSolidity, SiFigma } from "react-icons/si";
 import { MdEdit, MdAttachMoney, MdEvent } from "react-icons/md";
 import { DomainCard, DomainInfo } from "../components/DomainCard";
 
-
+const toLowerCaseLabel = (label: Domain): Domain =>
+  label.toLowerCase() as Domain;
 
 const getSubmissions = async (
   user: User,
@@ -36,27 +37,17 @@ const getSubmissions = async (
 
 const MotionBox = motion(Box);
 
-
 export default function Dashboard() {
   const { user } = UserAuth();
   const router = useRouter();
-  const [domainsToBeGrayed, setDomainsToBeGrayed] = useState<Domain[] | "loading">("loading");
+  const [domainsToBeGrayed, setDomainsToBeGrayed] = useState<
+    Domain[] | "loading"
+  >("loading");
   const { testStatus } = useCheckTest();
-  const [hoveredDomain, setHoveredDomain] = useState<Domain | null>(null);  
-  // console.log( hoveredDomain);
-  // useEffect(() => {
-  //   if (testStatus === "loading" || testStatus === null) return;
-  //   if (testStatus.isGivingTest) router.push("/management/test");
-  //   else router.push("/dashboard");
-  // }, [testStatus]);
+  const [hoveredDomain, setHoveredDomain] = useState<Domain | null>(null);
+  console.log(domainsToBeGrayed);
 
   const headingColor = useColorModeValue("white", "white");
-
-  // useEffect(() => {
-  //   if (testStatus === "loading" || testStatus === null) return;
-  //   if (testStatus.isGivingTest) router.push("/management/test");
-  //   else router.push("/dashboard");
-  // }, [testStatus]);
 
   useEffect(() => {
     if (user === null) {
@@ -75,10 +66,10 @@ export default function Dashboard() {
   ) {
     return <Loader />;
   }
-  const domains: DomainInfo[] = [  // Added explicit typing
+  const domains: DomainInfo[] = [
     {
       icon: FaHtml5,
-      label: "Web" as Domain,  // Type assertion to Domain
+      label: "Web" as Domain,
       tech: "HTML, CSS, JavaScript",
       color: "linear(to-r, #f7b42c, #fc575e)",
     },
@@ -112,10 +103,10 @@ export default function Dashboard() {
       tech: "UI/UX, Figma",
       color: "linear(to-r, #6a11cb, #2575fc)",
     },
-    
   ];
 
-  const marketingDomain: DomainInfo[] = [  // Added explicit typing
+  const marketingDomain: DomainInfo[] = [
+    // Added explicit typing
     {
       icon: MdEdit,
       label: "Editorial" as Domain,
@@ -133,9 +124,17 @@ export default function Dashboard() {
       label: "Events" as Domain,
       tech: "Event , Management",
       color: "linear(to-r, #a8e6cf, #90d4be)",
-    }
+    },
   ];
 
+  const hasTechnicalSubmission = domains.some((domain) =>
+    domainsToBeGrayed.includes(toLowerCaseLabel(domain.label))
+  );
+
+  // Check if any marketing domain is submitted
+  const hasMarketingSubmission = marketingDomain.some((domain) =>
+    domainsToBeGrayed.includes(toLowerCaseLabel(domain.label))
+  );
   return (
     <Box
       minH="100vh"
@@ -177,7 +176,9 @@ export default function Dashboard() {
                   key={domain.label}
                   {...domain}
                   index={index}
-                  isGrayed={domainsToBeGrayed.includes(domain.label)}
+                  isGrayed={domainsToBeGrayed.includes(
+                    toLowerCaseLabel(domain.label)
+                  )}
                   setHovered={setHoveredDomain}
                   isHovered={hoveredDomain === domain.label}
                 />
@@ -186,46 +187,13 @@ export default function Dashboard() {
           </Flex>
         </MotionBox>
 
-
-  
-
-          {/* <Link href="/management" textDecoration="none" display="inline-block">
-            <Button
-              as={motion.button}
-              isDisabled={testStatus?.isTestCompleted ?? false}
-              bg="rgba(123, 31, 162, 0.9)"
-              color="white"
-              leftIcon={<ManageAccountsIcon />}
-              whileHover={{
-                scale: 1.05,
-                backgroundColor: "rgba(123, 31, 162, 1)",
-              }}
-              whileTap={{ scale: 0.98 }}
-              size="lg"
-              px="8"
-              py="7"
-              fontSize="lg"
-              fontWeight="500"
-              backdropFilter="blur(10px)"
-              borderRadius="xl"
-              boxShadow="0 4px 20px rgba(123, 31, 162, 0.4)"
-              _hover={{
-                transform: "translateY(-2px)",
-                boxShadow: "0 6px 25px rgba(123, 31, 162, 0.5)",
-              }}
-              transition="all 0.3s"
-            >
-              Start Management Task
-            </Button>
-          </Link> */}
-
-<MotionBox
+        <MotionBox
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           mb="16"
         >
-                  <Heading
+          <Heading
             color={headingColor}
             fontSize={{ base: "4xl", md: "5xl" }}
             fontWeight="bold"
@@ -242,14 +210,21 @@ export default function Dashboard() {
           >
             <AnimatePresence>
               {marketingDomain.map((domain, index) => (
-                <DomainCard
-                  key={domain.label}
-                  {...domain}
-                  index={index}
-                  isGrayed={domainsToBeGrayed.includes(domain.label)}
-                  setHovered={setHoveredDomain}
-                  isHovered={hoveredDomain === domain.label}
-                />
+                <>
+                  <DomainCard
+                    key={domain.label}
+                    {...domain}
+                    index={index}
+                    isGrayed={domainsToBeGrayed.includes(
+                      toLowerCaseLabel(domain.label)
+                    )}
+                    setHovered={setHoveredDomain}
+                    isHovered={hoveredDomain === domain.label}
+                  />
+                  <p className="text-white">
+                    {domainsToBeGrayed.includes(domain.label)}
+                  </p>
+                </>
               ))}
             </AnimatePresence>
           </Flex>

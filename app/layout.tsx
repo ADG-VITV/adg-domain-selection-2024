@@ -22,6 +22,7 @@ export default function RootLayout({
           backgroundSize: "cover",
         }}
       >
+    
         <Providers>{children}</Providers>
       </body>
     </html>

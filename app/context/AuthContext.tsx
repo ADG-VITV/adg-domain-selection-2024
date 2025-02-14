@@ -17,12 +17,25 @@ const AuthContext = createContext<IAuthContext>({
 
 export const AuthContextProvider = ({ children }: { children: any }) => {
   const [user, setUser] = useState<IAuthContext["user"]>("loading");
-  
+
   // login function
   const googleSignIn = async () => {
     const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({
+      hd: "vitstudent.ac.in",
+    });
+
     try {
-      await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, provider);
+      const email = result.user?.email || "";
+
+      // Enforce VIT email restriction
+      if (!email.endsWith("@vitstudent.ac.in")) {
+        await signOut(auth); // Immediately sign out if not a VIT email
+        setUser(null); // Reset user state
+
+        throw new Error("Only VIT student emails are allowed.");
+      }
     } catch (err) {
       console.error(err);
     }
@@ -35,11 +48,15 @@ export const AuthContextProvider = ({ children }: { children: any }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
+      if (currentUser?.email?.endsWith("@vitstudent.ac.in")) {
+        setUser(currentUser);
+      } else {
+        setUser(null);
+      }
     });
-   
+
     return () => unsubscribe();
-  }, [user]);
+  }, []);
 
   return (
     <AuthContext.Provider value={{ user, googleSignIn, logOut }}>

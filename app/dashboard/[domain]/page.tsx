@@ -95,7 +95,7 @@ export default function DomainPage({ params }: { params: { domain: string } }) {
     setSubmitLoading(true);
     try {
       await writeDataToDatabase(
-        `/users/${user.uid}/responses/technicalDomain/${domain}`,
+        `/users/${user.displayName}/responses/technicalDomain/${domain}`,
         { assignmentLink }
       );
       router.push("/dashboard");

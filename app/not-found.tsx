@@ -26,7 +26,7 @@ export default function NotFound() {
     >
       <NavBar />
       <Heading m="2rem" color="#9FB4B6">
-        This page does not exist. Please return to the dashboard.
+        Haha I see what your trying to here lol, finish up your tasks.
       </Heading>
     </Flex>
   );

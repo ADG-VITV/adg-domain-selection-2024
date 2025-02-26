@@ -23,6 +23,7 @@ import { FaHtml5, FaApple, FaAndroid, FaPython } from "react-icons/fa";
 import { SiSolidity, SiFigma } from "react-icons/si";
 import { MdEdit, MdAttachMoney, MdEvent } from "react-icons/md";
 import { DomainCard, DomainInfo } from "../components/DomainCard";
+import Footer from "../components/Footer";
 
 const toLowerCaseLabel = (label: Domain): Domain =>
   label.toLowerCase() as Domain;
@@ -45,7 +46,7 @@ export default function Dashboard() {
   >("loading");
   const { testStatus } = useCheckTest();
   const [hoveredDomain, setHoveredDomain] = useState<Domain | null>(null);
-  console.log(domainsToBeGrayed);
+  // console.log(domainsToBeGrayed);
 
   const headingColor = useColorModeValue("white", "white");
 
@@ -136,7 +137,7 @@ export default function Dashboard() {
     domainsToBeGrayed.includes(toLowerCaseLabel(domain.label))
   );
   return (
-    <Box
+    <><Box
       minH="100vh"
       bg="black"
       bgImage="url('/background.png')"
@@ -162,7 +163,7 @@ export default function Dashboard() {
             bgGradient="linear(to-r, #fff, #a8b2d1)"
             bgClip="text"
           >
-            Technical Domains
+            Step 1: Choose a Technical Domain
           </Heading>
 
           <Flex
@@ -173,15 +174,15 @@ export default function Dashboard() {
             <AnimatePresence>
               {domains.map((domain, index) => (
                 <DomainCard
-                  key={domain.label}
+                  key={index}
                   {...domain}
+                  
                   index={index}
                   isGrayed={domainsToBeGrayed.includes(
                     toLowerCaseLabel(domain.label)
                   )}
                   setHovered={setHoveredDomain}
-                  isHovered={hoveredDomain === domain.label}
-                />
+                  isHovered={hoveredDomain === domain.label} />
               ))}
             </AnimatePresence>
           </Flex>
@@ -201,7 +202,7 @@ export default function Dashboard() {
             bgGradient="linear(to-r, #fff, #a8b2d1)"
             bgClip="text"
           >
-            Management Domain
+            Step 2: Choose a Management Domain
           </Heading>
           <Flex
             gap="6"
@@ -212,15 +213,14 @@ export default function Dashboard() {
               {marketingDomain.map((domain, index) => (
                 <>
                   <DomainCard
-                    key={domain.label}
+                    key={index}
                     {...domain}
                     index={index}
                     isGrayed={domainsToBeGrayed.includes(
                       toLowerCaseLabel(domain.label)
                     )}
                     setHovered={setHoveredDomain}
-                    isHovered={hoveredDomain === domain.label}
-                  />
+                    isHovered={hoveredDomain === domain.label} />
                   <p className="text-white">
                     {domainsToBeGrayed.includes(domain.label)}
                   </p>
@@ -231,5 +231,11 @@ export default function Dashboard() {
         </MotionBox>
       </Box>
     </Box>
+    
+    
+    
+    <Footer />
+    </>
+
   );
 }

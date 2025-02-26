@@ -36,9 +36,25 @@ export default function DomainPage({ params }: { params: { domain: string } }) {
   const { user } = UserAuth();
   const router = useRouter();
   const domain = params.domain as Domain;
-  console.log( domain);
+  // console.log( domain);
+  const domainString = params.domain as string;
 
-  const assignmentPlatform = domain === Domain.design ? "Figma" : "GitHub";
+
+  const managementDomains = new Set(["editorial", "events", "finance", "ios","design"]);
+const technicalDomains = new Set(["android", "blockchain", , , "ml", "web"]);
+
+const domainToPlatform = (domain: string) => {
+  
+  if( domain === "ios"){
+    return "Google Drive or GitHub";
+
+  }
+  return managementDomains.has(domain) ? "Google Drive" : "GitHub";
+};
+
+const assignmentPlatform = domainToPlatform(domain);
+
+  
   const [assignmentLink, setAssignmentLink] = useState("");
   const [submitLoading, setSubmitLoading] = useState(false);
   const [domainsToBeGrayed, setDomainsToBeGrayed] = useState<
@@ -117,7 +133,7 @@ export default function DomainPage({ params }: { params: { domain: string } }) {
   // ) : (
 
   if( user === null){
-    return <p>Errorr</p>
+    return <p>Error</p>
   }
   return<>
 
@@ -147,9 +163,13 @@ export default function DomainPage({ params }: { params: { domain: string } }) {
             </ListItem>
             <ListItem>
               {`${
-                assignmentPlatform === "Figma" ? "Design" : "Push"
+                domainString ==="Figma"? "Design":"Push"
               } your solution on ${assignmentPlatform} and paste the ${assignmentPlatform} link in the box
               below.`}
+            </ListItem>
+            <ListItem>
+           
+             <Text as='mark'> Note: Make sure the link is accessible to the evaluators and only one submission is allowed.</Text>
             </ListItem>
           </OrderedList>
           <Text mt="2rem" fontWeight="600" color="#9FB4B6" fontSize="1rem">

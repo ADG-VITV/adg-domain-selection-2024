@@ -20,12 +20,45 @@ import {
 import { Menu } from "@mui/icons-material";
 import { UserAuth } from "../context/AuthContext";
 import { useRouter } from "next/navigation";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Domain } from "@/lib/types";
+import { User } from "firebase/auth";
+import { getSubmittedTechnicalDomains } from "@/lib/functions";
+
+const domainMapping =  {
+  android: "Android",
+  blockchain: "Blockchain",
+  ml: "Machine Learning",
+  web: "Web Development",
+  editorial: "Editorial",
+  events: "Events",
+  finance: "Finance",
+  ios: "iOS",
+  design: "Design",
+}
+const getSubmissions = async (
+  user: User,
+  setDomainsToBeGrayed: Dispatch<SetStateAction<"loading" | Domain[]>>
+) => {
+  const technicalDomains = await getSubmittedTechnicalDomains(user);
+  // console.log("Technical Domains Retrieved:", technicalDomains);
+  setDomainsToBeGrayed(technicalDomains);
+};
 
 export default function NavBar() {
+  
   const { user, logOut } = UserAuth();
   const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  
+  const [domainsToBeGrayed, setDomainsToBeGrayed] = useState<
+      Domain[] | "loading">("loading");
+      useEffect(() => {
+        if (user === null) router.push("/");
+        else if (user !== "loading") {
+          getSubmissions(user, setDomainsToBeGrayed);
+        }
+      }, [user]);
+console.log( domainsToBeGrayed);
 
   return user === null || user === "loading" ? (
     <></>
@@ -70,6 +103,39 @@ export default function NavBar() {
                 <Text fontWeight="600">{user.displayName}</Text>
                 <Avatar size="sm" src={user.photoURL || ""} />
               </Flex>
+              <Flex flexDir="column" mt="1rem">
+  <Text fontSize="lg" fontWeight="bold" mb="0.5rem">
+    Selected Domains:
+  </Text>
+  <Flex flexWrap="wrap" gap="0.5rem">
+    {domainsToBeGrayed === "loading" ? (
+      <Text fontStyle="italic" color="gray.400">
+        Loading...
+      </Text>
+    ) : domainsToBeGrayed.length > 0 ? (
+      domainsToBeGrayed.map((domain, index) => (
+        <Text
+          key={index}
+          px="1rem"
+          py="1rem"
+          bg="brand.violet"
+          color="white"
+          borderRadius="8px"
+          fontWeight="medium"
+          boxShadow="sm"
+        >
+          {domainMapping[domain as keyof typeof domainMapping] || domain}
+        </Text>
+      ))
+    ) : (
+      <Text fontStyle="italic" color="gray.400">
+        None
+      </Text>
+    )}
+  </Flex>
+</Flex>
+
+
             </Flex>
           </DrawerBody>
 

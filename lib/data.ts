@@ -13,20 +13,20 @@ export const domainToName: { [key in Domain]: string } = {
 };
 
 export const domainToTaskLink: { [key in Domain]: string } = {
-  web: "https://drive.google.com/file/d/12BvVlaVhXH1RSDA4XazcbJUIKWTm61RP/preview",
-  ios: "https://drive.google.com/file/d/1Gf4TuzrLt1ydwEnPHyZC1A2OVBi0-664/preview",
+  web: "https://drive.google.com/file/d/1D6RC-jpeYapzXOsHEW7fX22KHe5ToAD6/preview",
+  ios: "https://drive.google.com/file/d/1SWWdAt9bM8WT6ngBYm7LBuVbIO6WitG6/preview",
   android:
     "https://drive.google.com/file/d/1JmC-8S-qovt8bvrUWdyWckfXGRXLlUof/preview",
-  ml: "https://drive.google.com/file/d/1Gaf-5MAhiIYOOamZsv8fq4PSfZnTSpBv/preview",
+  ml: "https://drive.google.com/file/d/1zcDNqCjSqMdzN_WVW8aNKRG9xMWPNAJ8/preview",
   blockchain:
-    "https://drive.google.com/file/d/1V7Gx7o_3utZLN0u2ZWCH_XWytxRnDie8/preview",
+    "https://drive.google.com/file/d/1BFqzbfuYhbL37khra__rI8VjzY995nct/preview",
   design:
-    "https://drive.google.com/file/d/1UoxCdZHTNUmCmEBiIeFGH00kqJXLN5_L/preview",
+    "https://drive.google.com/file/d/1-TrPwnITh0-GLfqA55SMCjnigJeeP4RB/preview",
 
     
-  editorial:"https://drive.google.com/file/d/12BvVlaVhXH1RSDA4XazcbJUIKWTm61RP/preview",
-  finance:"https://drive.google.com/file/d/12BvVlaVhXH1RSDA4XazcbJUIKWTm61RP/preview",
-  events: "https://drive.google.com/file/d/12BvVlaVhXH1RSDA4XazcbJUIKWTm61RP/preview"
+  editorial:"https://drive.google.com/file/d/1dMWWD1tP4NTmlruwA_OKlDP2JJRW4I6E/preview",
+  finance:"https://drive.google.com/file/d/1wUtjMgah3WcR_-H3fRGV9x8pKS4favHs/preview",
+  events: "https://drive.google.com/file/d/1ps2EO9Qcu2IFG3Z0NW0kcX6732-9D-Ui/preview"
 };
 
 export const managementDomainToTagColorScheme: {

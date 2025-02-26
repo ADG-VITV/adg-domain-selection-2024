@@ -32,15 +32,25 @@ export default function App() {
     <Loader />
   ) : (
     <Flex h="100vh" w="100%" bg="gray.900" overflow="hidden">
-      <Image
-        w={["0%", "0%", "40%"]}
-        h="100%"
-        src="/landing-image.svg"
-        objectFit="cover"
-        display={["none", "none", "initial"]}
-        transition="transform 0.3s ease-in-out"
-        _hover={{ transform: 'scale(1.05)' }}
-      />
+      <video
+  width="40%"
+  height="100%"
+  autoPlay
+  loop
+  muted
+  playsInline
+  style={{
+    objectFit: "cover",
+    
+   
+  }}
+  onMouseOver={(e) => e.currentTarget.style.transform = "scale(1.05)"}
+  onMouseOut={(e) => e.currentTarget.style.transform = "scale(1)"}
+>
+  <source src="/test.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
       <Flex
         w={["100%", "100%", "60%"]}
         h="100%"
@@ -93,7 +103,7 @@ export default function App() {
             fontSize={["2xl", "3xl"]}
             mb="2"
           >
-            ADG-VIT
+            ADGVIT
           </Heading>
           <Text 
             color="whiteAlpha.800" 
@@ -101,7 +111,7 @@ export default function App() {
             textAlign="center"
             fontSize="lg"
           >
-            Welcome to the Developer Gateway
+            Thank you for your interest in our club. All the best!
           </Text>
           <Button
             onClick={handleSignIn}
@@ -128,7 +138,7 @@ export default function App() {
             fontSize="sm" 
             textAlign="center"
           >
-            By signing in, you agree to our Terms of Service
+            Please Sign in with your VIT email.
           </Text>
         </Flex>
       </Flex>

@@ -23,9 +23,11 @@ import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Domain } from "@/lib/types";
 import { User } from "firebase/auth";
-import { getSubmittedTechnicalDomains } from "@/lib/functions";
+import { getSubmittedTechnicalDomains, getSubmittedManagementDomains } from "@/lib/functions";
 
 const domainMapping =  {
+  ios: "iOS",
+  design: "Design",
   android: "Android",
   blockchain: "Blockchain",
   ml: "Machine Learning",
@@ -33,16 +35,16 @@ const domainMapping =  {
   editorial: "Editorial",
   events: "Events",
   finance: "Finance",
-  ios: "iOS",
-  design: "Design",
+ 
 }
 const getSubmissions = async (
   user: User,
   setDomainsToBeGrayed: Dispatch<SetStateAction<"loading" | Domain[]>>
 ) => {
   const technicalDomains = await getSubmittedTechnicalDomains(user);
-  // console.log("Technical Domains Retrieved:", technicalDomains);
-  setDomainsToBeGrayed(technicalDomains);
+  const managementDomains = await getSubmittedManagementDomains(user);
+  const allSubmittedDomains = [...technicalDomains, ...managementDomains];
+  setDomainsToBeGrayed(allSubmittedDomains);
 };
 
 export default function NavBar() {

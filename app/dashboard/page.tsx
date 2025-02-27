@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 import Loader from "../components/Loader";
 import NavBar from "../components/NavBar";
 import { Domain } from "@/lib/types";
-import { getSubmittedTechnicalDomains } from "@/lib/functions";
+import { getSubmittedTechnicalDomains, getSubmittedManagementDomains } from "@/lib/functions";
 import { User } from "firebase/auth";
 import useCheckTest from "../hooks/useCheckTest";
 import { motion, AnimatePresence } from "framer-motion";
@@ -33,7 +33,9 @@ const getSubmissions = async (
   setDomainsToBeGrayed: Dispatch<SetStateAction<"loading" | Domain[]>>
 ) => {
   const technicalDomains = await getSubmittedTechnicalDomains(user);
-  setDomainsToBeGrayed(technicalDomains);
+  const managementDomains = await getSubmittedManagementDomains(user);
+  const allSubmittedDomains = [...technicalDomains, ...managementDomains];
+  setDomainsToBeGrayed(allSubmittedDomains.map(domain => domain.toLowerCase() as Domain));
 };
 
 const MotionBox = motion(Box);

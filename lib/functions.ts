@@ -75,6 +75,33 @@ export async function getSubmittedTechnicalDomains(
   return submittedDomains;
 }
 
+export async function checkManagementDomainSubmission(
+  user: User,
+  domain: Domain
+): Promise<boolean> {
+  return checkPathExistsInDatabase(
+    `users/${user.displayName}/responses/managementDomain/${domain}/assignmentLink`
+  );
+}
+
+export async function getSubmittedManagementDomains(
+  user: User
+): Promise<Domain[]> {
+  const submittedDomains: Domain[] = [];
+  const managementDomains = ["editorial", "events", "finance"];
+  
+  const checkDomainSubmissionPromises = managementDomains.map(
+    async (domain) => {
+      const hasSubmitted = await checkManagementDomainSubmission(user, domain as Domain);
+      if (hasSubmitted) {
+        submittedDomains.push(domain as Domain);
+      }
+    }
+  );
+  await Promise.all(checkDomainSubmissionPromises);
+  return submittedDomains;
+}
+
 export function getShuffledRandomQuestions(
   questions: (IMCQ | ISubjective)[]
 ): (IMCQ | ISubjective)[] {

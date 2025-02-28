@@ -46,10 +46,9 @@ export default function App() {
   }}
   
 >
-  <source src="/IMG_7026.MOV" type="video/mp4" />
+  <source src="/IMG_7029.MOV" type="video/mp4" />
   Your browser does not support the video tag.
 </video>
-
       <Flex
         w={["100%", "100%", "60%"]}
         h="100%"
